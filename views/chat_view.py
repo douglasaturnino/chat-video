@@ -41,9 +41,6 @@ def render_chat_interface(api_key):
         for i, text in enumerate(examples):
             with cols[i % 2]:
                 if st.button(f"💬 {text}", key=f"ex_{i}"):
-                    st.session_state.messages.append(
-                        {"role": "user", "content": text}
-                    )
                     st.session_state["prompt"] = text
                     st.rerun()
 
