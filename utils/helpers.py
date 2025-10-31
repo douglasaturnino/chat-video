@@ -26,5 +26,5 @@ def reset_chat():
         except:
             pass
         del st.session_state.video_file
-    for key in ["video_processor", "video_name"]:
+    for key in ["video_processor", "video_name", "prompt"]:
         st.session_state.pop(key, None)
