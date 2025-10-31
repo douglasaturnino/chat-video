@@ -8,32 +8,37 @@ from views.utils_view import display_video
 
 def render_sidebar():
     """Renderiza a barra lateral de upload e configuração."""
-    st.header("🔑 API Configuration")
-    default_api_key = os.getenv("GEMINI_API_KEY", "")
+    st.header("🔑 Configuração da API")
+    default_api_key = None
     api_key = st.text_input(
         "Gemini API Key",
         value=default_api_key,
         type="password",
-        help="Get your API key from https://aistudio.google.com/app/apikey",
+        help="Como conseguir a API https://aistudio.google.com/app/apikey",
     )
+
+    if not api_key:
+        api_key = os.getenv("GEMINI_API_KEY", "")
 
     st.markdown("---")
     st.header("📹 Upload Video")
 
     uploaded_file = st.file_uploader(
-        "Choose a video file",
+        "Escolha um vídeo no formato",
         type=["mp4", "avi", "mov", "mkv", "webm"],
     )
 
     if uploaded_file and not is_video_file(uploaded_file):
-        st.error("Please upload a valid video file.")
+        st.error("Por favor, envie um vídeo válido.")
         return api_key, None
 
     if uploaded_file:
         size_mb = get_file_size_mb(uploaded_file)
-        st.info(f"File size: {size_mb:.2f} MB")
+        st.info(f"Tamanho do arquivo: {size_mb:.2f} MB")
         if size_mb > 100:
-            st.warning("Large files may take longer to process or may fail.")
+            st.warning(
+                "Arquivos grandes podem demorar mais para serem processados ​​ou podem apresentar falhas."
+            )
 
         display_video(uploaded_file.getvalue(), uploaded_file.name)
 
