@@ -1,10 +1,12 @@
 [project]
-name = "teste-vide"
+name = "Chat_Video"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "google-generativeai>=0.8.0",
+    "pillow>=10.0.0",
     "python-dotenv>=1.0.0",
+    "streamlit>=1.28.0",
 ]
