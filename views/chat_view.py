@@ -5,31 +5,37 @@ import streamlit as st
 
 def render_chat_interface(api_key):
     """Renderiza a interface principal de chat."""
-    st.title("🎬 Video RAG with Gemini")
-    st.markdown("Upload a video and chat with it using Google's Gemini AI!")
+    st.title("🎬 Video RAG Com Gemini")
+    st.markdown(
+        "Faça o upload de um vídeo e converse com ele usando a IA Gemini do Google!"
+    )
 
     if not api_key:
-        st.info("👈 Please enter your Gemini API key in the sidebar.")
+        st.info(
+            "👈 Por favor, insira sua chave de API do Gemini na barra lateral."
+        )
         return
     if not st.session_state.get("video_file"):
         st.info(
-            "👈 Please upload a video file in the sidebar to start chatting."
+            "👈 Faça o upload de um arquivo de vídeo na barra lateral para iniciar o bate-papo."
         )
         return
 
-    st.success(f"✅ Ready to chat about: **{st.session_state.video_name}**")
+    st.success(
+        f"✅ Já pode conversar sobre: **{st.session_state.video_name}**"
+    )
 
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
     if len(st.session_state.messages) == 0:
-        st.markdown("### 💡 Example questions:")
+        st.markdown("### 💡 Exemplos de perguntas:")
         examples = [
-            "What is happening in this video?",
-            "Summarize the main events",
-            "Describe the people and objects you see",
-            "What actions are taking place?",
+            "O que está acontecendo neste vídeo?",
+            "Resuma os principais eventos",
+            "Descreva as pessoas e os objetos que você vê",
+            "Que ações estão ocorrendo?",
         ]
         cols = st.columns(2)
         for i, text in enumerate(examples):
@@ -38,16 +44,20 @@ def render_chat_interface(api_key):
                     st.session_state.messages.append(
                         {"role": "user", "content": text}
                     )
+                    st.session_state["prompt"] = text
                     st.rerun()
 
-    if prompt := st.chat_input("Ask a question about your video..."):
+    if (
+        prompt := st.chat_input("Faça uma pergunta sobre o seu vídeo...")
+        or st.session_state["prompt"]
+    ):
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.markdown(prompt)
 
         with st.chat_message("assistant"):
             message_placeholder = st.empty()
-            with st.spinner("Analyzing video..."):
+            with st.spinner("Analisando o vídeo..."):
                 vp = st.session_state.video_processor
                 response = vp.chat_with_video(
                     st.session_state.video_file, prompt
@@ -64,4 +74,4 @@ def render_chat_interface(api_key):
                     {"role": "assistant", "content": response}
                 )
             else:
-                st.error("Failed to generate response. Please try again.")
+                st.error("Não foi possível gerar resposta. Tente novamente.")

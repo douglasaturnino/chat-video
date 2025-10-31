@@ -12,11 +12,17 @@ from views.sidebar_controls import render_sidebar_controls
 from views.sidebar_view import render_sidebar
 
 st.set_page_config(
-    page_title="Video RAG with Gemini", page_icon="🎬", layout="wide"
+    page_title="Video RAG Com Gemini", page_icon="🎬", layout="wide"
 )
 load_dotenv()
 
-for key in ["messages", "video_file", "video_processor", "video_name"]:
+for key in [
+    "messages",
+    "video_file",
+    "video_processor",
+    "video_name",
+    "prompt",
+]:
     if key not in st.session_state:
         st.session_state[key] = None if key != "messages" else []
 
