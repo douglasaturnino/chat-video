@@ -2,6 +2,8 @@
 
 Aplicação de exemplo em Streamlit para realizar Video RAG (Retrieval-Augmented Generation) usando a API Gemini (Google Generative AI). O projeto permite enviar um vídeo, aguardar o processamento pela API do Gemini e conversar com o conteúdo do vídeo via prompts (chat interativo).
 
+A UI do Streamlit pode ser acessado [aqui](https://dso-chat-video.streamlit.app/)
+
 # Recursos
 
 - Upload de vídeo e envio para a API Gemini
